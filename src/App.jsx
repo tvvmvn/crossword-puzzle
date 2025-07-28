@@ -8,7 +8,7 @@ export default function App() {
   return (
     <HashRouter>
       <div className="px-4 max-w-md mx-auto">
-        <h1 className="my-8 text-xl font-bold text-center">
+        <h1 className="my-8 text-2xl font-bold text-center text-emerald-700">
           K-Crossword Puzzle
         </h1>
 
