@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import db from "../db";
 import { 
   generateInitialError,
   generateInitialInput,
@@ -8,13 +7,21 @@ import {
   isFullfilled
  } from "../utils";
 
-export default function Form({ id }) {
+export default function Form({ data }) {
 
-  const data = db.find(item => item.id == id)
   const labels = generateLabels(data.result)
-  const [input, setInput] = useState(generateInitialInput(data.result))
-  const [error, setError] = useState(generateInitialError(data.result))
+  const [input, setInput] = useState(null)
+  const [error, setError] = useState(null)
   const [done, setDone] = useState(false)
+  const [pending, setPending] = useState(true)
+
+  useEffect(() => {
+    setPending(true)
+    setInput(generateInitialInput(data.result))
+    setError(generateInitialError(data.result))
+    setDone(false)
+    setPending(false)
+  }, [])
 
   function handleChange(e, r, c) {
 
@@ -52,6 +59,10 @@ export default function Form({ id }) {
     }
 
     setError(updatedError)
+  }
+
+  if (pending) {
+    return <p>Loading..</p>
   }
 
   const board = input.map((row, r) => (

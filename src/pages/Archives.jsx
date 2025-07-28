@@ -1,16 +1,26 @@
 
-import { useParams } from "react-router";
-import Form from "../components/Form";
+import { Link } from "react-router";
+import db from "../db";
 
 export default function Archives() {
 
-  const { id } = useParams();
-
   return (
     <>
-      <h1 className="text-2xl my-4">Archives</h1>
+      <p className="my-4">
+        <Link to="/">← Home</Link>
+      </p>
 
-      <Form id={id} />
+      <h1 className="my-4 text-2xl font-semibold"> 
+        Archives for K-Crossword Puzzle
+      </h1>
+
+      {db.map(item => (
+        <li key={item.id}>
+          <Link to={"/archives/" + item.id}>
+            Puzzle at {item.createdAt}
+          </Link>
+        </li>
+      ))}
     </>
   )
 }
