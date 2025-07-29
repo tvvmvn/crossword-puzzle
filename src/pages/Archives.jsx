@@ -14,10 +14,13 @@ export default function Archives() {
         Archives for K-Crossword Puzzle
       </h1>
 
-      {db.map(item => (
+      {db
+        .filter((item, i) => i < db.length - 1)
+        .reverse()
+        .map(item => (
         <li key={item.id}>
           <Link to={"/archives/" + item.id}>
-            Puzzle at {item.createdAt}
+            Puzzle published at {item.createdAt}
           </Link>
         </li>
       ))}

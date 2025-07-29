@@ -73,7 +73,7 @@ export default function Form({ data }) {
       {row.map((val, c) => (
         <div key={c} className="relative">
           {labels[r][c] && (
-            <span className="absolute top-1 left-2 font-bold text-emerald-700">
+            <span className="absolute top-1 left-2 font-bold">
               {labels[r][c]}
             </span>
           )}
@@ -106,7 +106,7 @@ export default function Form({ data }) {
       </div>
 
       <button 
-        className="my-4 px-2 py-1 bg-emerald-700 hover:bg-emerald-800 text-white font-semibold rounded disabled:opacity-20 cursor-pointer"
+        className="my-4 px-2 py-1 bg-black text-white font-semibold rounded disabled:opacity-10 cursor-pointer"
         disabled={!isFullfilled(input)}
       >
         Submit

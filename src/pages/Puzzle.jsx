@@ -15,9 +15,9 @@ export default function Puzzle() {
       </p>
 
       <h1 className="my-4 text-2xl font-semibold">
-        Puzzle at {data.createdAt}
+        Puzzle published at {data.createdAt}
       </h1>
-
+      
       <Form data={data} />
     </>
   )

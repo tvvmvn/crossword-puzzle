@@ -5,17 +5,16 @@ import { useState } from "react";
 
 export default function Home() {
   
-  const data = db.find(item => item.id == "p0")
-
+  const data = db[db.length-1]
   const [active, setActive] = useState(false)
 
   return (
     <>
-      <h1 className="mt-8 text-2xl font-bold text-center text-emerald-700">
-        K-Crossword Puzzle
+      <h1 className="mt-8 text-2xl font-bold text-center">
+        <code>K-Crossword Puzzle 🕯️</code> 
       </h1>
 
-      <div className="flex justify-between my-4">
+      <div className="flex justify-between mt-2">
         <Link 
           to="/archives" 
           className="p-2 font-semibold"
@@ -24,7 +23,7 @@ export default function Home() {
         </Link>
         <div id="dropdown-container" className="relative">
           <button 
-            className="font-semibold p-2 cursor-pointer"
+            className="p-2 font-semibold cursor-pointer"
             onClick={() => setActive(!active)}
           >
             About
@@ -41,13 +40,14 @@ export default function Home() {
               src="profile.webp" 
               alt="" 
             />
-            <p className="text-emerald-700">
+            <p className="font-semibold">
               tvvmvn@gmail.com
             </p>
-            <p className="my-4">
+            <p className="my-4 text-gray-500">
               Hi there!   
               My name is Taemin and I am a web developer. 
-              I made this puzzle to help those who is learning Korean.
+              I made this puzzle to help those who is learning Korean and
+              tried to put casual words in.
               Thank you for loving Korean and our culture!
               You can see more previous puzzles at <span className="">Archives</span>.
               Enjoy!
@@ -56,7 +56,22 @@ export default function Home() {
         </div>
       </div>
 
+      <p 
+        id="ribbon" 
+        className="my-4 px-2 py-1 font-semibold bg-rose-800 text-white"
+      >
+        <i>
+          Puzzle will be Updated on every Sunday! 
+        </i>
+      </p>
+
       <Form data={data} />
+
+      <aside className="my-8">
+        <div className="h-20 bg-gray-200 flex justify-center items-center">
+          Advertise
+        </div>
+      </aside>
     </>
   )
 }
