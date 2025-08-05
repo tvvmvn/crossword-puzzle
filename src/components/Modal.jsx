@@ -13,7 +13,8 @@ export default function Input({
   const modalRef = useRef(null)
 
   useEffect(() => {
-    modalRef.current.scrollIntoView()
+    console.log(modalRef.current)
+    modalRef.current.scrollIntoView({block: "end"})
   })
 
   useEffect(() => {
@@ -51,7 +52,7 @@ export default function Input({
     <div 
       id="overlay" 
       ref={modalRef}
-      className="fixed inset-0 flex justify-center items-end transition-all z-20"
+      className="flex justify-center items-end transition-all z-20"
       onClick={handleOverlay}
     >
       <div 
