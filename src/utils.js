@@ -1,98 +1,79 @@
-export function isFullfilled(input) {
 
-  for (let r = 0; r < 5; r++) {
-    for (let c = 0; c < 5; c++) {
-      if (input[r][c] != null) {
-        if (input[r][c] == '') {
-          return false
-        }
+class Cell {
+  constructor(r, c, label, dir, value, correct) {
+    this.id = 'cell-' + r + c
+    this.r = r;
+    this.c = c;
+    this.label = label;
+    this.dir = dir;
+    this.value = value;
+    this.correct = correct;
+  }
+}
+
+export function isPassed(board) {
+  for (let r = 0; r < board.length; r++) {
+    for (let c = 0; c < board[r].length; c++) {
+      let cell = board[r][c];
+      
+      if (cell && cell.value != cell.correct) {
+        return false;
       }
     }
   }
 
-  return true
+  return true;
 }
 
-export function isError(error) {
-
-  for (let r = 0; r < 5; r++) {
-    for (let c = 0; c < 5; c++) {
-      if (error[r][c] == true) {
-        return true;
-      }
-    }
-  }
-
-  return false;
-}
-
-export function generateInitialError(result) {
+export function initBoard(result) {
   
-  const initialError = result.map(row => {
-    return row.map(val => {
-      if (val != null) {
-        return false
-      }
-      return null;
-    })
-  })
-
-  return initialError;
-}
-
-export function generateInitialInput(result) {
-  
-  const initialInput = result.map(row => {
-    return row.map(val => {
-      if (val != null) {
-        return '';
-      }
-      return null;
-    })
-  })
-
-  return initialInput;
-}
-
-export function generateLabels(result) {
-
-  let i = 1;
-  let right, down;
   let labels = []
-
+  let n = 1;
+  let up, down, left, right;
+  
   for (let r = 0; r < result.length; r++) {
-    
     labels[r] = []
-    
     for (let c = 0; c < result[r].length; c++) {
       
-      right = down = false
-
-      // right
-      if (c < result[r].length - 1) {
-        if (result[r][c] != null && result[r][c + 1] != null) {
-          if (c == 0 || result[r][c - 1] == null) {
-            right = true
-          }
-        }
+      labels[r][c] = null;
+      up = down = left = right = false;
+  
+      // up
+      if (r > 0 && result[r - 1][c]) {
+        up = true
       }
-
+  
       // down
-      if (r < result.length - 1) {
-        if (result[r][c] != null && result[r + 1][c] != null) {
-          if (r == 0 || result[r - 1][c] == null) {
-            down = true
-          }
+      if (r < result.length - 1 && result[r + 1][c]) {
+        down = true
+      }
+  
+      // left
+      if (c > 0 && result[r][c - 1]) {
+        left = true
+      }
+      
+      // right
+      if (c < result[r].length - 1 && result[r][c + 1]) {
+        right = true
+      }
+  
+      if (result[r][c]) {
+        // both
+        if (!left && right && !up && down) {
+          labels[r][c] = new Cell(r, c, n++, 2, '', result[r][c])
+        // horizontal 
+        } else if (!left && right) {
+          labels[r][c] = new Cell(r, c, n++, 0, '', result[r][c])
+        // vertical
+        } else if (!up && down) {
+          labels[r][c] = new Cell(r, c, n++, 1, '', result[r][c])
+        } else {
+          labels[r][c] = new Cell(r, c, null, null, '', result[r][c]) 
         }
-      }
-
-      if (right || down) {
-        labels[r][c] = i++
-      } else {
-        labels[r][c] = null
-      }
+      } 
     }
   }
-
+  
   return labels;
 }
