@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 export default function Input({
   cell,
@@ -10,6 +10,11 @@ export default function Input({
   const [value, setValue] = useState("")
   const [vertical, setVertical] = useState(false)
   const [error, setError] = useState(null)
+  const modalRef = useRef(null)
+
+  useEffect(() => {
+    modalRef.current.scrollIntoView()
+  })
 
   useEffect(() => {
     console.log("cell changed")
@@ -49,6 +54,7 @@ export default function Input({
       onClick={handleOverlay}
     >
       <div 
+        ref={modalRef}
         className="w-md px-6 pb-6 mb-8 bg-white relative rounded"
         style={{ boxShadow: "0 0 10px 2px #ddd" }}
       >

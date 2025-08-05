@@ -151,8 +151,6 @@ export default function Puzzle() {
           handleCancel={handleCancel}
         />
       )}
-
-      <div className="fixed bottom-4 left-4 bg-black p-4 z-30 rounded-full"></div>
     </>
   )
 }
