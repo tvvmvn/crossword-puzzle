@@ -50,11 +50,11 @@ export default function Input({
   return (
     <div 
       id="overlay" 
+      ref={modalRef}
       className="fixed inset-0 flex justify-center items-end transition-all z-20"
       onClick={handleOverlay}
     >
       <div 
-        ref={modalRef}
         className="w-md px-6 pb-6 mb-8 bg-white relative rounded"
         style={{ boxShadow: "0 0 10px 2px #ddd" }}
       >
