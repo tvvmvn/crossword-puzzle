@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 export default function Input({
   cell,
   updateBoard,
+  handleCancel,
   setInputActive
 }) {
   
@@ -25,7 +26,6 @@ export default function Input({
       updateBoard(value, vertical)
       setValue("")
       setVertical(false)
-      setInputActive(false)
     } catch (ex) {
       // console.error(ex)
       setError(ex)
@@ -34,12 +34,12 @@ export default function Input({
 
   function handleOverlay(e) {
     if (e.target == e.currentTarget) {
-      setInputActive(false)
+      handleCancel()
     }
   }
 
   function handleClose() {
-    setInputActive(false)
+    handleCancel()
   }
 
   return (
