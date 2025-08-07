@@ -4,17 +4,16 @@ export default function Input({
   cell,
   updateBoard,
   handleCancel,
-  setInputActive
 }) {
   
   const [value, setValue] = useState("")
   const [vertical, setVertical] = useState(false)
   const [error, setError] = useState(null)
-  const modalRef = useRef(null)
+  const inputRef = useRef(null)
 
   useEffect(() => {
-    console.log(modalRef.current)
-    modalRef.current.scrollIntoView({block: "end"})
+    console.log(inputRef.current)
+    inputRef.current.scrollIntoView()
   })
 
   useEffect(() => {
@@ -51,8 +50,7 @@ export default function Input({
   return (
     <div 
       id="overlay" 
-      ref={modalRef}
-      className="flex justify-center items-end transition-all z-20"
+      className="fixed inset-0 flex justify-center items-end transition-all z-20"
       onClick={handleOverlay}
     >
       <div 
@@ -96,6 +94,7 @@ export default function Input({
         {/* Input and Buttons */}
         <div className="mt-4 flex">
           <input
+            ref={inputRef}
             id="words"
             type="text"
             className="grow-1 border border-gray-400 px-4 rounded"

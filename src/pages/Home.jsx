@@ -18,8 +18,6 @@ export default function Archives() {
 
         <ul className="list-disc px-4">
           {db
-            // .filter((item, i) => i < db.length - 1)
-            .reverse()
             .map(item => (
             <li key={item.id}>
               <Link to={"/archives/" + item.id}>

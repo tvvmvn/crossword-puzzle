@@ -1,79 +1,77 @@
+export function initCells(result) {
 
-class Cell {
-  constructor(r, c, label, dir, value, correct) {
-    this.id = 'cell-' + r + c
-    this.r = r;
-    this.c = c;
-    this.label = label;
-    this.dir = dir;
-    this.value = value;
-    this.correct = correct;
-  }
-}
+  let board = [];
 
-export function isPassed(board) {
-  for (let r = 0; r < board.length; r++) {
-    for (let c = 0; c < board[r].length; c++) {
-      let cell = board[r][c];
-      
-      if (cell && cell.value != cell.correct) {
-        return false;
+  for (let r = 0; r < result.length; r++) {
+    board[r] = []
+    for (let c = 0; c < result[r].length; c++) {
+      if (result[r][c]) {
+        board[r][c] = { 
+          id: 'c' + r + c, 
+          crds: [r, c],
+          label: null, 
+          space: [0, 0],
+          value: '',
+          correct: result[r][c],
+          isCorrect: function () {
+            return this.value == this.correct;
+          },
+          active: false,
+        }
+      } else {
+        board[r][c] = null;
       }
     }
   }
 
-  return true;
-}
+  let label = 1;
+  
+  for (let r = 0; r < board.length; r++) {
+    for (let c = 0; c < board[r].length; c++) {
 
-export function initBoard(result) {
-  
-  let labels = []
-  let n = 1;
-  let up, down, left, right;
-  
-  for (let r = 0; r < result.length; r++) {
-    labels[r] = []
-    for (let c = 0; c < result[r].length; c++) {
+      if (!board[r][c]) continue;
+
+      let up = r > 0 && board[r - 1][c]
+      let down = r < board.length - 1 && board[r + 1][c]
+      let left = c > 0 && board[r][c - 1]
+      let right = c < board[r].length - 1 && board[r][c + 1]
       
-      labels[r][c] = null;
-      up = down = left = right = false;
-  
-      // up
-      if (r > 0 && result[r - 1][c]) {
-        up = true
-      }
-  
-      // down
-      if (r < result.length - 1 && result[r + 1][c]) {
-        down = true
-      }
-  
-      // left
-      if (c > 0 && result[r][c - 1]) {
-        left = true
-      }
-      
-      // right
-      if (c < result[r].length - 1 && result[r][c + 1]) {
-        right = true
-      }
-  
-      if (result[r][c]) {
-        // both
-        if (!left && right && !up && down) {
-          labels[r][c] = new Cell(r, c, n++, 2, '', result[r][c])
-        // horizontal 
-        } else if (!left && right) {
-          labels[r][c] = new Cell(r, c, n++, 0, '', result[r][c])
-        // vertical
-        } else if (!up && down) {
-          labels[r][c] = new Cell(r, c, n++, 1, '', result[r][c])
-        } else {
-          labels[r][c] = new Cell(r, c, null, null, '', result[r][c]) 
+      let x = !left && right
+      let y = !up && down
+
+      if (x || y) {
+        let dir;
+        
+        if (x) {
+          dir = 0;
+          let i = c;
+          while(i < board[r].length && board[r][i] != null) {
+            board[r][i++].space[0] = label;
+          }
         }
+    
+        if (y) {
+          dir = 1;
+          let i = r;
+          while(i < board.length && board[i][c] != null) {
+            board[i++][c].space[1] = label;
+          }
+        }
+
+        board[r][c].label = label++;
       } 
     }
   }
-  
-  return labels;
+
+  let cells = []
+
+  for (let r = 0; r < board.length; r++) {
+    for (let c = 0; c < board[r].length; c++) {
+      if (board[r][c]) {
+        cells.push(board[r][c])
+      }
+    }
+  }
+
+  return cells
 }
