@@ -110,7 +110,8 @@ export default function App() {
           {cells.map(cell => (
             <div 
               key={cell.id}
-              className={`pt-[75%] relative col-start-${cell.crds[1] + 1}`}
+              className={`pt-[75%] relative`}
+              style={{ gridColumnStart: cell.crds[1] + 1 }}
             >
               {cell.label && (
                 <label 
