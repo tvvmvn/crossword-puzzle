@@ -76,20 +76,20 @@ export default function App() {
     <>
 
       <h1 className="my-4 text-2xl font-semibold">
-        Puzzle at {puzzle.createdAt}
+        Puzzle at {puzzle.createdAt} ✏️
       </h1>
 
       <p className="my-4">
-        <Link to="/">
+        <Link to="/" className="text-gray-400">
           ← Back
         </Link>
       </p>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="mt-8">
         {trial.done && (
           <>
             {trial.passed ? (
-              <p className="my-4 text-blue-500">
+              <p className="my-4 font-semibold text-blue-500">
                 You did it! 🎉
               </p>
             ) : (
@@ -106,12 +106,15 @@ export default function App() {
           </>
         )}
 
-        <div className="grid grid-cols-6 gap-2">
+        <div className="grid gap-2">
           {cells.map(cell => (
             <div 
               key={cell.id}
               className={`pt-[75%] relative`}
-              style={{ gridColumnStart: cell.crds[1] + 1 }}
+              style={{ 
+                gridColumnStart: cell.crds[1] + 1,
+                gridTemplateColumns: `repeat(${puzzle.columns}, minmax(0, 1fr))`
+              }}
             >
               {cell.label && (
                 <label 
@@ -124,7 +127,7 @@ export default function App() {
               <input 
                 id={cell.id}
                 type="text" 
-                className={`absolute inset-0 w-full h-full text-center ${bgColor(cell)} focus:bg-blue-200 outline-none`}
+                className={`absolute inset-0 w-full h-full text-center ${bgColor(cell)} focus:bg-blue-200 outline-none caret-transparent`}
                 value={trial.done ? cell.correct : cell.value}
                 onChange={(e) => handleChange(e, cell.id)}
                 onFocus={() => handleFocus(cell.id)}
@@ -143,14 +146,16 @@ export default function App() {
         )}
       </form>
 
-      <h3 className="my-4 text-lg font-semibold">
-        Description
-      </h3>
+      <div className="mt-8">
+        <h3 className="my-4 text-lg font-semibold">
+          Description
+        </h3>
+      </div>
 
       <ul>
         {puzzle.desc.map((item, i) => (
-          <li key={i} className="my-4">
-            {++i}. {item}
+          <li key={i} className="my-2">
+            {item}
           </li>
         ))}
       </ul>

@@ -16,7 +16,7 @@ export default function App() {
         </Routes>
 
       {/* Footer */}
-      <footer className="p-16"></footer>
+      <footer className="p-12"></footer>
       </div>
     </HashRouter>
   )
