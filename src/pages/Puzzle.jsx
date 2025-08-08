@@ -106,7 +106,7 @@ export default function App() {
           </>
         )}
 
-        <div className="grid gap-2">
+        <div className="grid gap-1">
           {cells.map(cell => (
             <div 
               key={cell.id}
@@ -119,7 +119,8 @@ export default function App() {
               {cell.label && (
                 <label 
                   htmlFor={cell.id}
-                  className="absolute top-0 left-0 px-2 py-1 font-semibold z-10"
+                  className="absolute top-0 left-0 px-1 font-semibold z-10"
+                  style={{ fontSize: 6 / puzzle.columns + "rem" }}
                 >
                   {cell.label}
                 </label>
