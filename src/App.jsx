@@ -13,12 +13,12 @@ export default function App() {
 
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="archives/:id" element={<Puzzle />} />
-          <Route path="/create" element={<CreateForm />} />
+          <Route path="puzzles/:id" element={<Puzzle />} />
+          <Route path="create" element={<CreateForm />} />
         </Routes>
 
       {/* Footer */}
-      <footer className="p-12"></footer>
+      <footer className="p-8"></footer>
       </div>
     </HashRouter>
   )

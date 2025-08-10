@@ -1,16 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 import { createBoard, createErrors, createLabels, createValues } from "../utils";
-import db from "../db";
+import db from "../db.json";
 import { Link, useParams } from "react-router";
 
 export default function Puzzle() {
-  
+
   const { id } = useParams();
   const data = db.find(item => item.id == id)
+
   const board = createBoard(data.result)
   const labels = createLabels(data.result)
   const [values, setValues] = useState(createValues(data.result));
   const [errors, setErrors] = useState(createErrors(data.result));
+
   const [targetCrds, setTargetCrds] = useState([-1, -1])
   const [down, setDown] = useState(false)
   const [done, setDone] = useState(false)
@@ -110,7 +112,7 @@ export default function Puzzle() {
   return (
     <>
       <h1 className="my-4 text-2xl font-semibold">
-        Puzzle at {data.createdAt} ✏️
+        Puzzle at {data.id} ✏️
       </h1>
 
       <p className="my-4">
@@ -148,7 +150,7 @@ export default function Puzzle() {
           {board.map((row, r) => row.map((col, c) => (
             <div
               key={'key' + r + c}
-              className="relative pt-[75%]"
+              className="relative pt-[100%]"
             >
               {!!col && (
                 <>
@@ -188,9 +190,11 @@ export default function Puzzle() {
         )}
       </form>
 
-      <p className="whitespace-pre-line text-base/8">
-        {data.desc}
-      </p>
+      <div className="mt-8">
+        <p className="whitespace-pre-line text-base/8">
+          {data.desc}
+        </p>
+      </div>
     </>
   )
 }

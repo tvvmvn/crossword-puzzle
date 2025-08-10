@@ -1,6 +1,6 @@
 
 import { Link } from "react-router";
-import db from "../db";
+import db from "../db.json";
 
 export default function Archives() {
 
@@ -29,10 +29,10 @@ export default function Archives() {
             .map(item => (
             <li key={item.id} className="my-2">
               <Link 
-                to={"/archives/" + item.id}
+                to={"/puzzles/" + item.id}
                 className="underline"
               >
-                Puzzle published at {item.createdAt}
+                Puzzle published at {item.id}
               </Link>
             </li>
           ))}
