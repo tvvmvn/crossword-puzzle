@@ -2,6 +2,7 @@ import './App.css'
 import { HashRouter, Routes, Route } from 'react-router'
 import Home from './pages/Home'
 import Puzzle from './pages/Puzzle'
+import CreateForm from './pages/CreateForm'
 
 export default function App() {
 
@@ -13,6 +14,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="archives/:id" element={<Puzzle />} />
+          <Route path="/create" element={<CreateForm />} />
         </Routes>
 
       {/* Footer */}

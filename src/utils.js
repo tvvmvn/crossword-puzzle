@@ -1,77 +1,97 @@
-export function initCells(result) {
+export function createSheet(rowCount, colCount) {
+  
+  let sheet = []
 
-  let board = [];
+  for (let r = 0; r < rowCount; r++) {
+    sheet[r] = []
+    for (let c = 0; c < colCount; c++) {
+      sheet[r][c] = ''
+    }
+  }
+
+  return sheet;
+}
+
+export function createBoard(result) {
+  
+  let board = []
 
   for (let r = 0; r < result.length; r++) {
     board[r] = []
     for (let c = 0; c < result[r].length; c++) {
       if (result[r][c]) {
-        board[r][c] = { 
-          id: 'c' + r + c, 
-          crds: [r, c],
-          label: null, 
-          space: [0, 0],
-          value: '',
-          correct: result[r][c],
-          isCorrect: function () {
-            return this.value == this.correct;
-          },
-          active: false,
-        }
+        board[r][c] = 1;
       } else {
-        board[r][c] = null;
+        board[r][c] = 0;
       }
     }
   }
 
+  return board;
+}
+
+export function createValues(result) {
+  
+  let values = []
+
+  for (let r = 0; r < result.length; r++) {
+    values[r] = []
+    for (let c = 0; c < result[r].length; c++) {
+      if (result[r][c]) {
+        values[r][c] = '';
+      } else {
+        values[r][c] = null;
+      }
+    }
+  }
+
+  return values;
+}
+
+export function createErrors(result) {
+  
+  let errors = []
+
+  for (let r = 0; r < result.length; r++) {
+    errors[r] = []
+    for (let c = 0; c < result[r].length; c++) {
+      if (result[r][c]) {
+        errors[r][c] = false;
+      } else {
+        errors[r][c] = null;
+      }
+    }
+  }
+
+  return errors;
+}
+
+export function createLabels(result) {
+  
+  let labels = []
   let label = 1;
   
-  for (let r = 0; r < board.length; r++) {
-    for (let c = 0; c < board[r].length; c++) {
+  for (let r = 0; r < result.length; r++) {
+    labels[r] = []
+    for (let c = 0; c < result[r].length; c++) {
+      labels[r][c] = null;
+      if (!result[r][c]) continue;
 
-      if (!board[r][c]) continue;
-
-      let up = r > 0 && board[r - 1][c]
-      let down = r < board.length - 1 && board[r + 1][c]
-      let left = c > 0 && board[r][c - 1]
-      let right = c < board[r].length - 1 && board[r][c + 1]
+      let top = r > 0 && result[r - 1][c]
+      let bottom = r < result.length - 1 && result[r + 1][c]
+      let left = c > 0 && result[r][c - 1]
+      let right = c < result[r].length - 1 && result[r][c + 1]
       
-      let x = !left && right
-      let y = !up && down
+      let across = !left && right
+      let down = !top && bottom
 
-      if (x || y) {
-        let dir;
-        
-        if (x) {
-          dir = 0;
-          let i = c;
-          while(i < board[r].length && board[r][i] != null) {
-            board[r][i++].space[0] = label;
-          }
-        }
-    
-        if (y) {
-          dir = 1;
-          let i = r;
-          while(i < board.length && board[i][c] != null) {
-            board[i++][c].space[1] = label;
-          }
-        }
-
-        board[r][c].label = label++;
-      } 
-    }
-  }
-
-  let cells = []
-
-  for (let r = 0; r < board.length; r++) {
-    for (let c = 0; c < board[r].length; c++) {
-      if (board[r][c]) {
-        cells.push(board[r][c])
+      if (across || down) {
+        labels[r][c] = label++;
+      } else {
+        labels[r][c] = null;
       }
     }
   }
 
-  return cells
+  return labels;
 }
