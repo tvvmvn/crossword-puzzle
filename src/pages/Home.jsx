@@ -29,7 +29,7 @@ export default function Home() {
             .map(item => (
             <li key={item.id} className="my-2">
               <Link 
-                to={"/crossword-puzzle/puzzles/" + item.id}
+                to={"p/" + item.id}
                 className="underline"
               >
                 Puzzle published at {item.id}

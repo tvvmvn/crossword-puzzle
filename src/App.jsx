@@ -1,28 +1,28 @@
 import './App.css'
-import { BrowserRouter, Routes, Route } from 'react-router'
+import { HashRouter, Routes, Route } from 'react-router'
 import Home from './pages/Home'
 import Puzzle from './pages/Puzzle'
 import CreateForm from './pages/CreateForm'
+import NotFound from './pages/NotFound'
 
 export default function App() {
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <div className="max-w-xl min-h-screen mx-auto px-4 bg-white ">
         <header className="pt-2"></header>
 
         <Routes>
-          <Route path="crossword-puzzle">
-            <Route index element={<Home />} />
-            <Route path="puzzles/:id" element={<Puzzle />} />
-            <Route path="create" element={<CreateForm />} />
-          </Route>
+          <Route index element={<Home />} />
+          <Route path="p/:id" element={<Puzzle />} />
+          <Route path="create" element={<CreateForm />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
 
       {/* Footer */}
       <footer className="p-8"></footer>
       </div>
-    </BrowserRouter>
+    </HashRouter>
   )
 }
 

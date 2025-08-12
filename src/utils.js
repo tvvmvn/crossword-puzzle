@@ -1,17 +1,3 @@
-export function createSheet(rowCount, colCount) {
-  
-  let sheet = []
-
-  for (let r = 0; r < rowCount; r++) {
-    sheet[r] = []
-    for (let c = 0; c < colCount; c++) {
-      sheet[r][c] = ''
-    }
-  }
-
-  return sheet;
-}
-
 export function createBoard(result) {
   
   let board = []
@@ -48,24 +34,6 @@ export function createValues(result) {
   return values;
 }
 
-export function createErrors(result) {
-  
-  let errors = []
-
-  for (let r = 0; r < result.length; r++) {
-    errors[r] = []
-    for (let c = 0; c < result[r].length; c++) {
-      if (result[r][c]) {
-        errors[r][c] = false;
-      } else {
-        errors[r][c] = null;
-      }
-    }
-  }
-
-  return errors;
-}
-
 export function createLabels(result) {
   
   let labels = []
@@ -94,4 +62,36 @@ export function createLabels(result) {
   }
 
   return labels;
+}
+
+export function createErrors(result) {
+  
+  let errors = []
+
+  for (let r = 0; r < result.length; r++) {
+    errors[r] = []
+    for (let c = 0; c < result[r].length; c++) {
+      if (result[r][c]) {
+        errors[r][c] = false;
+      } else {
+        errors[r][c] = null;
+      }
+    }
+  }
+
+  return errors;
+}
+
+export function createSheet(rowCount, colCount) {
+  
+  let sheet = []
+
+  for (let r = 0; r < rowCount; r++) {
+    sheet[r] = []
+    for (let c = 0; c < colCount; c++) {
+      sheet[r][c] = ''
+    }
+  }
+
+  return sheet;
 }
