@@ -2,7 +2,7 @@
 import { Link } from "react-router";
 import db from "../db.json";
 
-export default function Archives() {
+export default function Home() {
 
   return (
       <>
@@ -29,7 +29,7 @@ export default function Archives() {
             .map(item => (
             <li key={item.id} className="my-2">
               <Link 
-                to={"/puzzles/" + item.id}
+                to={"/crossword-puzzle/puzzles/" + item.id}
                 className="underline"
               >
                 Puzzle published at {item.id}
