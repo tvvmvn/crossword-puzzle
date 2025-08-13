@@ -131,72 +131,70 @@ export default function Board({
       <form 
         onSubmit={handleSubmit}
         className="mt-8"
-        >
-        <div className="px-4">
-          {/* Result message */}
-          {done && (
-            <div className="my-4">
-              {errors.flat()
-                .filter(item => item == true).length > 0 ? (
-                <p className="text-red-500">
-                  Oops! Try later 🥲
-                </p>
-              ) : ( 
-                <p className="text-blue-500">
-                  You did it! 🎉
-                </p>
-              )}
-            </div>
-          )}
-
-          {/* Board */}
-          <div 
-            className="grid gap-1"
-            style={{ gridTemplateColumns: `repeat(${colCount}, minmax(0, 1fr))` }}
-          >
-            {board.map((row, r) => row.map((col, c) => (
-              <div
-                key={'key' + r + c}
-                className="relative pt-[100%]"
-              >
-                {!!col && (
-                  <>
-                    {labels[r][c] && (
-                      <label 
-                        htmlFor={'c' + r + c}
-                        className="absolute top-0 left-0 px-1 font-semibold z-10"
-                      >
-                        {labels[r][c]}
-                      </label>
-                    )}
-                    <input 
-                      id={'c' + r + c}
-                      type="text" 
-                      className={`absolute inset-0 ${errors[r][c] ? "bg-red-200" : "bg-gray-200"} ${down ? "focus:bg-yellow-200" : "focus:bg-blue-200"} text-center outline-none caret-transparent`}
-                      value={done ? result[r][c] : values[r][c]}
-                      onChange={(e) => handleChange(e, r, c)}
-                      onKeyUp={(e) => handleKeyUp(e, r, c)}
-                      onKeyDown={(e) => handleKeyDown(e, r, c)}
-                      onClick={(e) => handleClick(e, r, c)}
-                      ref={(r == targetCrds[0] && c == targetCrds[1]) ? inputRef : null }
-                      disabled={done}
-                      autoComplete="off"
-                      // style={{ boxShadow: '0 0 10px 2px #ddd' }}
-                    />
-                  </>
-                )}
-              </div>
-            )))}
-          </div>
-        </div>
-
-        {!done && (
-          <div className="mt-8 px-4">
-            <button className="px-2 py-1 bg-black text-white font-semibold rounded">
-              Done
-            </button>
+      >
+        {/* Result message */}
+        {done && (
+          <div className="my-4">
+            {errors.flat()
+              .filter(item => item == true).length > 0 ? (
+              <p className="text-red-500">
+                Oops! Try later 🥲
+              </p>
+            ) : (
+              <p className="text-blue-500">
+                You did it! 🎉
+              </p>
+            )}
           </div>
         )}
+
+        {/* Board */}
+        <div
+          className="grid gap-1"
+          style={{ gridTemplateColumns: `repeat(${colCount}, minmax(0, 1fr))` }}
+        >
+          {board.map((row, r) => row.map((col, c) => (
+            <div
+              key={'key' + r + c}
+              className="relative pt-[100%]"
+            >
+              {!!col && (
+                <>
+                  {labels[r][c] && (
+                    <label
+                      htmlFor={'c' + r + c}
+                      className="absolute top-0 left-0 px-1 font-semibold z-10"
+                    >
+                      {labels[r][c]}
+                    </label>
+                  )}
+                  <input
+                    id={'c' + r + c}
+                    type="text"
+                    className={`absolute inset-0 border text-center outline-none`}
+                    value={done ? result[r][c] : values[r][c]}
+                    onChange={(e) => handleChange(e, r, c)}
+                    onKeyUp={(e) => handleKeyUp(e, r, c)}
+                    onKeyDown={(e) => handleKeyDown(e, r, c)}
+                    onClick={(e) => handleClick(e, r, c)}
+                    ref={(r == targetCrds[0] && c == targetCrds[1]) ? inputRef : null}
+                    disabled={done}
+                    autoComplete="off"
+                  // style={{ boxShadow: '0 0 10px 2px #ddd' }}
+                  />
+                </>
+              )}
+            </div>
+          )))}
+        </div>
+
+      {!done && (
+        <div className="mt-8">
+          <button className="px-2 py-1 bg-black text-white font-semibold rounded">
+            Done
+          </button>
+        </div>
+      )}
       </form>
 
       <div className="mt-8 px-4">

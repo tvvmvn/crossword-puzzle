@@ -9,7 +9,7 @@ export default function App() {
 
   return (
     <HashRouter>
-      <div className="max-w-xl min-h-screen mx-auto bg-white ">
+      <div className="max-w-xl min-h-screen mx-auto bg-white">
         <header className="pt-2"></header>
 
         <Routes>

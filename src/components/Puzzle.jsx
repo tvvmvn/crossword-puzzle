@@ -31,6 +31,7 @@ export default function Board({
   const keys = result.flat().filter((val, i, arr) => {
     return val && arr.indexOf(val) === i;
   }).sort()
+  keys.push('backspace')
 
   useEffect(() => {
     document.addEventListener("click", (e) => {
@@ -92,7 +93,7 @@ export default function Board({
 
     let value = key;
 
-    if (key == 'Backspace') {
+    if (key == 'backspace') {
       value = ''
     }
 
@@ -115,7 +116,7 @@ export default function Board({
     let left = c > 0 && board[r][c - 1];
     let right = c < board[0].length - 1 && board[r][c + 1];
 
-    if (key == 'Backspace') {
+    if (key == 'backspace') {
       if (down) {
         if (top) {
           setCrds([--r, c])
@@ -158,7 +159,7 @@ export default function Board({
         >
           {/* Result message */}
           {done && (
-            <div className="my-4">
+            <div className="my-4 px-4">
               {errors.flat()
                 .filter(item => item == true).length > 0 ? (
                 <p className="text-red-500">
@@ -226,34 +227,26 @@ export default function Board({
         </p>
       </div>
 
-      {/* Keyboard */}
+      {/* Overlay */}
       <div 
-        className={`fixed left-0 ${typing ? 'bottom-0' : '-bottom-72'} w-full h-[40vh] bg-black/[0.2] border-t-4 z-20 transition-all`}
-        ref={keyboardRef}
-        style={{ visibility: !typing && "hidden"  }}
-      >
-        <div className="max-w-xl mx-auto p-4">
-          <div className="grid grid-cols-7 gap-2">
-            {keys.map((key, i) => (
-            <div className="relative pt-[100%]">
+        className={`fixed left-0 bottom-0 w-full bg-white border-t-4 flex justify-center z-20`}
+        style={{ display: !typing && "none"  }}
+        >
+        {/* Modal */}
+        <div 
+          className="w-lg p-4 grid grid-cols-7 gap-2"
+          ref={keyboardRef}
+        >
+          {keys.map(key => (
+            <div key={key} className="relative pt-[100%]">
               <button
-                key={i}
-                className="absolute inset-0 flex items-center justify-center bg-white font-semibold rounded-full"
+                className={`absolute inset-0 flex items-center justify-center border-2 ${key == 'backspace' ? 'border-red-200 text-red-200' : 'border-gray-200'} font-semibold rounded-full`}
                 onClick={(e) => f(key)}
               >
-                {key}
+                {key == 'backspace' ? '←' : key}
               </button>
             </div>
-            ))}
-          </div>
-          <div className="mt-4 flex justify-end">
-            <button 
-              className="px-4 py-1 bg-white font-semibold rounded" 
-              onClick={() => f('Backspace')}
-            >
-              ←
-            </button>
-          </div>
+          ))}
         </div>
       </div>
 
