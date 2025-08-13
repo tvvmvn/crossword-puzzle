@@ -180,7 +180,7 @@ export default function Board({
           {board.map((row, r) => row.map((col, c) => (
             <div
               key={'key' + r + c}
-              className="relative pt-[75%] bg-gray-300"
+              className="relative pt-[100%] bg-gray-300"
             >
               {!!col && (
                 <>
@@ -228,12 +228,12 @@ export default function Board({
 
       {/* Keyboard */}
       <div 
-        className={`fixed left-0 ${typing ? 'bottom-0' : '-bottom-72'} w-full h-72 bg-black/[0.2] border-t-4 z-20 transition-all`}
+        className={`fixed left-0 ${typing ? 'bottom-0' : '-bottom-72'} w-full h-[40vh] bg-black/[0.2] border-t-4 z-20 transition-all`}
         ref={keyboardRef}
         style={{ visibility: !typing && "hidden"  }}
       >
-        <div className="p-4 max-w-xl mx-auto">
-          <div className="grid grid-cols-8 gap-2 px-2">
+        <div className="max-w-xl mx-auto p-4">
+          <div className="grid grid-cols-7 gap-2">
             {keys.map((key, i) => (
             <div className="relative pt-[100%]">
               <button
@@ -246,9 +246,9 @@ export default function Board({
             </div>
             ))}
           </div>
-          <div className="flex justify-end">
+          <div className="mt-4 flex justify-end">
             <button 
-              className="px-4 py-2 bg-white font-semibold rounded" 
+              className="px-4 py-1 bg-white font-semibold rounded" 
               onClick={() => f('Backspace')}
             >
               ←
