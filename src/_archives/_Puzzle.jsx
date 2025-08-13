@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Link, useParams } from "react-router";
 import { initCells } from "../utils";
-import db from "../db";
+import db from "./db";
 
 export default function App() {
   
