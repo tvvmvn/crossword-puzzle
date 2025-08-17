@@ -82,6 +82,17 @@ export function createErrors(result) {
   return errors;
 }
 
+export function createKeyboard(result) {
+  
+  let arr = result.flat().filter((val, i, arr) => {
+    return val && arr.indexOf(val) === i;
+  }).sort();
+
+  arr.push('del');
+
+  return arr;
+}
+
 export function createSheet(rowCount, colCount) {
   
   let sheet = []

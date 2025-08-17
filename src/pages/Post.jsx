@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from "react-router";
+import { useParams, useNavigate, Link } from "react-router";
 import Puzzle from "../components/Puzzle";
 import db from "../db.json";
 
@@ -13,11 +13,25 @@ export default function Post() {
   }
 
   return (
-    <Puzzle
-      id={data.id}
-      result={data.result}
-      colCount={data.colCount}
-      desc={data.desc}
-    />
+    <>
+      <div className="px-4">
+        <h1 className="my-4 text-2xl font-semibold">
+          Puzzle at {id} ✏️
+        </h1>
+
+        <p className="my-4">
+          <Link to="/" className="">
+            ← Back
+          </Link>
+        </p>
+      </div>
+        
+      <Puzzle
+        id={data.id}
+        result={data.result}
+        colCount={data.colCount}
+        desc={data.desc}
+      />
+    </>
   )
 }

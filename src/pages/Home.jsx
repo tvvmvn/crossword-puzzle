@@ -8,7 +8,7 @@ export default function Home() {
       <>
         <header className="px-4">
           <h1 className="my-4 text-2xl font-semibold"> 
-            K-Crossword Puzzle 📚
+            Crossword Puzzle 📚
           </h1>
         </header>
 
