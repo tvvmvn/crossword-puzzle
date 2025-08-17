@@ -2,29 +2,25 @@ import { useEffect, useRef, useState } from "react";
 import { 
   createBoard, 
   createErrors, 
-  createKeyboard, 
   createLabels, 
   createValues 
 } from "../utils";
+import Keyboard from "./Keyboard";
 
 export default function Puzzle({ 
   result,
-  colCount,
-  desc,
  }) {
 
   const [board, setBoard] = useState(createBoard(result))
   const [labels, setLabels] = useState(createLabels(result));
   const [values, setValues] = useState(createValues(result));
   const [errors, setErrors] = useState(createErrors(result));
-  const [done, setDone] = useState(false)
-  const [typing, setTyping] = useState(false)
   const [crds, setCrds] = useState([-1, -1]);
   const [down, setDown] = useState(true)
-  const [keys, setKeys] = useState(createKeyboard(result));
+  const [typing, setTyping] = useState(false)
+  const [done, setDone] = useState(false)
 
   // console.log(values)
-  console.log(keys)
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -43,16 +39,11 @@ export default function Puzzle({
     // set starting point
     setCrds([r, c]);
 
-    console.log(crds)
-    console.log(r, c)
-
     // keyboard boom 
     setTyping(true);
 
     // set direction to move
-    let top = r > 0 && board[r - 1][c]
     let bottom = r < board.length - 1 && board[r + 1][c];
-    let left =  c > 0 && board[r][c - 1];
     let right = c < board[r].length - 1 && board[r][c + 1];
 
     if (right && bottom) {
@@ -69,7 +60,6 @@ export default function Puzzle({
   }
 
   function keyClicked(key) {
-    
     // current crds
     let r = crds[0];
     let c = crds[1];
@@ -104,12 +94,10 @@ export default function Puzzle({
     }
   }
 
-  function modalClosed(e) {
-    if (e.target == e.currentTarget) {
-      setTyping(false)
-      setCrds([-1, -1])
-      setDown(true)
-    }
+  function modalClosed() {
+    setTyping(false)
+    setCrds([-1, -1])
+    setDown(true)
   }
 
   function bgColor(r, c) {
@@ -129,11 +117,8 @@ export default function Puzzle({
   }
 
   return (
-    <>
-      <form 
-        onSubmit={handleSubmit}
-        className="mt-8 px-2"
-      >
+    <div className="mt-8 px-4">
+      <form onSubmit={handleSubmit}>
         {/* Result message */}
         {done && (
           <div className="my-4">
@@ -159,17 +144,18 @@ export default function Puzzle({
             {board.map((row, r) => (
               <tr key={r} className="grid grid-cols-8 divide-x-2 divide-gray-200">
                 {row.map((col, c) => (
-                  <td key={c} className="h-8 relative pt-[100%]">
+                  <td key={c} className="relative pt-[100%]">
                     {labels[r][c] && (
                       <label
-                        htmlFor={'c' + r + c}
-                        className={`absolute top-0 left-0 px-1 font-semibold z-10`}
+                        htmlFor={'d' + r + c}
+                        className={`absolute top-0 left-0 px-1 font-semibold text-black/[0.2] text-sm z-10`}
                       >
                         {labels[r][c]}
                       </label>
                     )}
                     {!!col && (
                       <input 
+                        id={'d' + r + c}
                         type="text"  
                         className={`absolute inset-0 text-center ${bgColor(r, c)} outline-none`}
                         readOnly={true}
@@ -194,31 +180,13 @@ export default function Puzzle({
       )}
       </form>
 
-      <div className="mt-8 px-4">
-        <p className="whitespace-pre-line text-base/8">
-          {desc}
-        </p>
-      </div>
-
-      <div 
-        className={`fixed w-full h-[35vh] left-0 ${typing ? 'bottom-0' : '-bottom-[40vh]'} bg-gray-300 border-t-4 transition-all z-20`}
-        onClick={modalClosed}
-      >
-        {/* keyboard */}
-        <div 
-          className="mx-auto max-w-xl grid grid-cols-6 gap-2 p-4 bg-gray-100"
-        >
-          {keys.map(key => (
-            <button 
-              key={key}
-              className={`p-2 ${key == 'del' ? 'bg-red-300 text-white' : 'bg-white'} rounded-lg font-semibold`}
-              onClick={() => keyClicked(key)}
-            >
-              {key}
-            </button>
-          ))}
-        </div>
-      </div>
-    </>
+      {/* Keyboard */}
+      <Keyboard 
+        result={result}
+        typing={typing}
+        keyClicked={keyClicked}
+        modalClosed={modalClosed} 
+      />
+    </div>
   )
 }

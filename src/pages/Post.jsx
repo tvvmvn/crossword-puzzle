@@ -32,6 +32,12 @@ export default function Post() {
         colCount={data.colCount}
         desc={data.desc}
       />
+
+      <div className="mt-8 px-4">
+        <p className="whitespace-pre-line text-base/8">
+          {data.desc}
+        </p>
+      </div>
     </>
   )
 }
